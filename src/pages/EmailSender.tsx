@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EmailComposer from '../components/email/EmailComposer';
 import { Recipient, SendEmailRequest } from '../types/email';
+import { apiFetch } from '../lib/api';
 
 const EmailSender: React.FC = () => {
   const [recipients, setRecipients] = useState<Recipient[]>([]);
@@ -30,7 +31,7 @@ const EmailSender: React.FC = () => {
         smtpConfig: data.smtpConfig
       };
 
-      const response = await fetch('/api/email/send-emails', {
+      const response = await apiFetch('/api/email/send-emails', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ const EmailSender: React.FC = () => {
   const pollJobStatus = async (jobId: string) => {
     const checkStatus = async () => {
       try {
-        const response = await fetch(`/api/email/status/${jobId}`);
+        const response = await apiFetch(`/api/email/status/${jobId}`);
         const data = await response.json();
 
         if (response.ok) {

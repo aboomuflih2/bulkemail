@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Upload, FileText, X } from 'lucide-react';
 import { Recipient } from '../../types/email';
+import { apiFetch } from '../../lib/api';
 
 interface FileUploadProps {
   onRecipientsChange: (recipients: Recipient[]) => void;
@@ -19,7 +20,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onRecipientsChange, recipients 
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/email/upload', {
+      const response = await apiFetch('/api/email/upload', {
         method: 'POST',
         body: formData,
       });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, Clock, Send } from 'lucide-react';
+import { apiFetch } from '../../lib/api';
 
 interface EmailProgressProps {
   jobId: string;
@@ -33,7 +34,7 @@ const EmailProgress: React.FC<EmailProgressProps> = ({ jobId, jobStatus }) => {
 
     const fetchProgress = async () => {
       try {
-        const response = await fetch(`/api/email/status/${jobId}`);
+        const response = await apiFetch(`/api/email/status/${jobId}`);
         const data = await response.json();
 
         if (data.progress) {
