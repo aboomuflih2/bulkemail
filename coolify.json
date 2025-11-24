@@ -1,0 +1,39 @@
+{
+  "name": "Bulk Email Sender",
+  "description": "A powerful bulk email sender application with file upload, SMTP configuration, and real-time progress tracking",
+  "version": "1.0.0",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "ports": [
+    {
+      "port": 3000,
+      "protocol": "http"
+    }
+  ],
+  "environment": {
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  },
+  "healthcheck": {
+    "path": "/health",
+    "interval": 30,
+    "timeout": 10,
+    "retries": 3,
+    "start_period": 40
+  },
+  "volumes": [
+    {
+      "source": "uploads",
+      "target": "/app/uploads",
+      "type": "volume"
+    }
+  ],
+  "labels": {
+    "traefik.enable": "true",
+    "traefik.http.routers.bulk-email-sender.rule": "Host(`your-domain.com`)",
+    "traefik.http.routers.bulk-email-sender.tls": "true",
+    "traefik.http.routers.bulk-email-sender.tls.certresolver": "letsencrypt"
+  }
+}
